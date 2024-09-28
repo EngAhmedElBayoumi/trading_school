@@ -1,0 +1,177 @@
+<!---extand basic django-->
+{% extends 'base2.html' %}
+<!---import static django-->
+{% load static %}
+<!---block django-->
+{% block body %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Trading Whale School </title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Sites meta Data -->
+  <meta name="application-name" content="Trading Whale School">
+  <meta name="author" content="Your Name">
+  <meta name="keywords" content="Trading Whale School, Trading Education, Trading Monster">
+  <meta name="description" content="Trading Whale School is your go-to platform for learning how to trade and become a trading monster.">
+
+  <!-- OG meta data -->
+  <meta property="og:title" content="Trading Whale School">
+  <meta property="og:description" content="Trading Whale School is your go-to platform for learning how to trade and become a trading monster.">
+  <meta property="og:image" content="{% static 'assets/images/logo/login-logo.png' %}">
+  
+
+
+
+  <link rel="shortcut icon" href="{% static 'assets/images/logo/logo.png' %}" type="image/x-icon">
+  <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/css/aos.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/css/all.min.css' %}">
+
+  <link rel="stylesheet" href="{% static 'assets/css/swiper-bundle.min.css' %}">
+
+
+
+  <!-- main css for template -->
+  <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+</head>
+<body>
+
+    <!-- Top Header -->
+    <div class="py-2 header-section--style1" style="padding-top:20px ;">
+        <div class="container d-flex justify-content-between align-items-center" style="padding-top:20px ;">
+            <div class="d-flex" style="align-items:center; margin-left: 30px; margin-top:-20px;">
+                <!---language icon-->
+                <i class="fa fa-language" style="color:#e5cd26;font-size: 25px;"></i>
+                  <div class="custom-dropdown" >
+                    <button style="background-color: #00150f; border: none;" >
+                        <span class="flag-icon flag-icon-us">
+                            <a href="/ar/landing_page">اللغه العربية</a>
+                        </span> 
+                    </button>
+                   
+                  </div>
+              </div>
+                
+            </div>
+        </div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="header header-section--style1 ">
+        <div class="container">
+            <div class="d-flex" style="justify-content: space-between;align-items: center;">
+                <a class="navbar-brand" href="#">
+                    <img src="{% static 'assets/images/logo/preloader.png' %}" alt="" srcset="" style="width: 100px;">
+                </a>
+                <a class="trk-btn trk-btn--border trk-btn--primary d-block" style="width: 100px; text-align: center;" href="{% url 'accounts:login' %}">login</a>
+                
+            </div>
+            
+        </div>
+    </nav>
+
+    <!-- Main Section -->
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-md-6">
+                <img src="{{ landing_page.image.url }}" alt="Main Image" class="img-fluid">
+            </div>
+            <div class="col-md-6 d-flex flex-column justify-content-center">
+                <h1 class="text-center" style="color: #00D094;"> {{ landing_page.title }}</h1>
+                <p>
+                    {{ landing_page.description }}
+                </p>
+              </div>
+        </div>
+    </div>
+
+    <!-- Courses Section -->
+    <div class="container-fluid py-5" style="background-color: #0C201D;">
+      <div class="container">
+          <h1 class="text-center" style="color: #00D094;">Video</h2>
+            <div>
+                <video id="promoVideo" src="{{ landing_page.video.url }}" controls width="100%" height="100%" ></video>
+            </div>
+      </div>
+  </div>
+
+    
+
+    <!-- Request Plan Section -->
+    <div class="container my-5">
+        <h2>Request a Plan</h2>
+        <form method="post">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="name" class="form-label">Name *</label>
+                    <input type="text" class="form-control" id="name" name="name" required placeholder="Your Name">
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="email" class="form-label">Email *</label>
+                    <input type="email" class="form-control" id="email" name="email" required placeholder="Your Email">
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="phone" class="form-label">Phone *</label>
+                    <input type="text" class="form-control" id="phone" name="phone" required placeholder="Your Phone">
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="age" class="form-label">Age *</label>
+                    <input type="number" class="form-control" id="age" name="age" required placeholder="Your Age">
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="gender" class="form-label">Gender *</label>
+                    <select class="form-select form-control" id="gender" name="gender" required>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                    </select>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="location" class="form-label">Location *</label>
+                    <input type="text" class="form-control" id="location" name="location" required placeholder="Your Location">
+                </div>
+            </div>
+            <div class="mb-3 ">
+                <label for="notes" class="form-label">Notes</label>
+                <textarea class="form-control" id="notes" name="notes" rows="3" placeholder="Your Notes"></textarea>
+            </div>
+            <div class="text-center">
+                <button type="submit" id="requestButton" class="trk-btn trk-btn--border trk-btn--primary d-block mt-4" disabled 
+                data-bs-toggle="tooltip" title="Watch the full video to enable the button">
+                Request
+            </button>
+          </div>
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Get the video and button elements
+        const video = document.getElementById('promoVideo');
+        const requestButton = document.getElementById('requestButton');
+
+        // Disable the button initially
+        requestButton.disabled = true;
+
+        
+            // Initialize Bootstrap tooltip
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+              return new bootstrap.Tooltip(tooltipTriggerEl)
+            })
+        
+            // Enable button when the video ends
+            video.addEventListener('ended', function() {
+                requestButton.disabled = false;
+            });
+    </script>
+</body>
+</html>
+
+
+{% endblock %}
