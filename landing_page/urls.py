@@ -4,11 +4,14 @@ from django.urls import path
 app_name = 'landing_page'
 urlpatterns = [
     path('', views.LandingPage, name='LandingPage'),
-    
-    
     path('userlandingpage/', views.UserLandingPagedef, name='UserLandingPage'),
-    
-    
-    # out
     path('page/<str:pagename>', views.outuserlandingpage, name='outuserlandingpage'),
+    
+    #-----------------ar-----------------------
+    path('ar/', views.LandingPage_ar, name='LandingPage_ar'),
+    path('ar/userlandingpage', views.UserLandingPagedef_ar, name='UserLandingPage_ar'),
+    path('page/ar/<str:pagename>', views.outuserlandingpage_ar, name='outuserlandingpage_ar'),
+    
+    
+    
 ]

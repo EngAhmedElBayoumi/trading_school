@@ -114,7 +114,9 @@
                   <li><a href="https://www.tradingview.com" class="menu-li-a">(موقع) Trading View </a></li>
                   <li><a href="https://gocharting.com/" class="menu-li-a">(موقع) GoCharting </a></li>
                   <li><a href="https://sa.investing.com/economic-calendar/" class="menu-li-a">المفكرة الاقتصادية</a></li>
-
+                  {% if user.has_landpage %}
+                  <li><a href="{% url 'landing_page:UserLandingPage_ar' %}" class="menu-li-a">صفحة العرض </a></li>
+                  {% endif %}
                 </ul>
               </li>
               <!---submenu-->
@@ -136,6 +138,8 @@
                 <ul class="submenu">
                   <li><a href="{% url 'admin:index' %}" class="menu-li-a">لوحة التحكم</a></li>
                   <li><a href="{% url 'home:send_emails_ar' %}" class="menu-li-a">ارسال ايميلات</a></li>
+                  <li><a href="{% url 'landing_page:LandingPage_ar' %}" class="menu-li-a">صفحة العرض الرئيسية</a></li>
+                  
                 </ul>
               </li>
               {% endif %}

@@ -92,6 +92,7 @@
                   {% if user.has_landpage %}
                   <li><a href="{% url 'landing_page:UserLandingPage' %}" class="menu-li-a">Landing Page </a></li>
                   {% endif %}
+                   
                 </ul>
               </li>
               <!---submenu-->
@@ -113,6 +114,8 @@
                 <ul class="submenu">
                   <li><a href="{% url 'admin:index' %}" class="menu-li-a">Dashboard</a></li>
                   <li><a href="{% url 'home:send_emails' %}" class="menu-li-a">Send Emails</a></li>
+                  <li><a href="{% url 'landing_page:LandingPage' %}" class="menu-li-a">Main Landing page</a></li>
+
                 </ul>
               </li>
               {% endif %}
