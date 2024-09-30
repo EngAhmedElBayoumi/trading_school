@@ -866,8 +866,6 @@ def team_profile_ar(request,id):
     custom_user = CustomUser.objects.get(id=user.id)
     users = CustomUser.objects.filter(create_by=user)
     users_profiles = Profile.objects.filter(user__in=users)
-
-    
     forign=1
     total_partners = 0
     for partner_profile in users_profiles:

@@ -63,40 +63,102 @@
     </div>
 
 
-    <div class="container-fluid my-5 p-5 fade-in" style="background-color: #081E18;">
-        <div class="container">
-            <h2 style="color:#00CF93">طلبات العضوية</h2>
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">الاسم </th>
-                    <th scope="col">الايميل</th>
-                    <th scope="col">رقم الهاتف</th>
-                    <th scope="col">السن</th>
-                    <th scope="col">النوع</th>
-                    <th scope="col">العنوان</th>
-                    <th scope="col">الملاحظات</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for requested in requested %}
-                <tr>
-                    <th scope="row">{{ forloop.counter }}</th>
-                    <td>{{ requested.name }}</td>
-                    <td>{{ requested.email }}</td>
-                    <td>{{ requested.phone }}</td>
-                    <td>{{ requested.age }}</td>
-                    <td>{{ requested.gender }}</td>
-                    <td>{{ requested.location }}</td>
-                    <td>{{ requested.notes }}</td>
-                </tr>
-                {% endfor %}
-                
-            </tbody>
-        </table>
+    <div class="my-5 p-5 fade-in" style="background-color: #081E18;">
+        <div class="">
+            <div class="d-flex" style="justify-content: space-around; align-items: center; margin-bottom: 50px;">
+                <h2 style="color: #00CF93">الطلبات</h2>
+                <button id="save-btn" class="trk-btn trk-btn--border trk-btn--primary d-block mt-4 text-center"
+                    style="width: fit-content; text-align: center; display: flex; justify-content: center; align-items: center;">
+                    حفظ
+                </button>
+            </div>
+    
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">
+                            <input type="checkbox" id="checkall">
+                        </th>
+                        <th scope="col">الاسم</th>
+                        <th scope="col">الايميل</th>
+                        <th scope="col">الهاتف</th>
+                        <th scope="col">السن</th>
+                        <th scope="col">النوع</th>
+                        <th scope="col">العنوان</th>
+                        <th scope="col">ملاحظات المستخدم</th>
+                        <th scope="col">ملاحظتي</th>
+                        <th scope="col">تاريخ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for requested in requested %}
+                    <tr>
+                        <th scope="row">
+                            <input type="checkbox" class="user-checkbox" data-id="{{ requested.id }}" {% if requested.conected %} checked {% endif %}>
+                        </th>
+                        <td>{{ requested.name }}</td>
+                        <td>{{ requested.email }}</td>
+                        <td>{{ requested.phone }}</td>
+                        <td>{{ requested.age }}</td>
+                        <td>{{ requested.gender }}</td>
+                        <td>{{ requested.location }}</td>
+                        <td>{{ requested.notes }}</td>
+                        <td><textarea class="mynotes" data-id="{{ requested.id }}" cols="2" rows="2">{{ requested.mynotes }}</textarea></td>
+                        <td>{{ requested.created_at }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
+
+
+
+    
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+    // Check/uncheck all checkboxes
+    $('#checkall').on('change', function() {
+        $('.user-checkbox').prop('checked', this.checked);
+    });
+
+    // Save button click event
+    $('#save-btn').on('click', function() {
+        const data = [];
+
+        // Loop through all rows to gather data
+        $('.user-checkbox').each(function() {
+            const userId = $(this).data('id');
+            const connected = $(this).is(':checked');
+            const myNotes = $('textarea.mynotes[data-id="' + userId + '"]').val();
+
+            data.push({
+                id: userId,
+                conected: connected,
+                mynotes: myNotes
+            });
+        });
+
+        // AJAX call to save data
+        $.ajax({
+            url: "{% url 'landing_page:update_requests' %}",
+            method: "POST",
+            data: {
+                csrfmiddlewaretoken: "{{ csrf_token }}",
+                requests: JSON.stringify(data)
+            },
+            success: function(response) {
+                alert('Data saved successfully!');
+            },
+            error: function(xhr, status, error) {
+                alert('An error occurred: ' + error);
+            }
+        });
+    });
+});
+</script>
+
 
     <script>
         document.getElementById('copypagelink').addEventListener('click', function() {

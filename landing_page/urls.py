@@ -4,6 +4,7 @@ from django.urls import path
 app_name = 'landing_page'
 urlpatterns = [
     path('', views.LandingPage, name='LandingPage'),
+    path('update_requests/', views.update_requests, name='update_requests'),
     path('userlandingpage/', views.UserLandingPagedef, name='UserLandingPage'),
     path('page/<str:pagename>', views.outuserlandingpage, name='outuserlandingpage'),
     

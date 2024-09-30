@@ -34,6 +34,17 @@ class MainSection(models.Model):
         return str(self.title)
     
     
+    
+class SocialMedia(models.Model):
+    icon=models.ImageField(upload_to='static/landing_page/image', null=True, blank=True)
+    name=models.CharField(max_length=100)
+    link=models.URLField()
+    
+    def __str__(self):
+        return str(self.name)
+
+
+    
 class CoursesSection(models.Model):
     title=models.CharField(max_length=100)
     title_ar=models.CharField(max_length=100,verbose_name="Arabic title")
@@ -57,16 +68,21 @@ class BenfitsSection(models.Model):
     
     
 class Pricing(models.Model):
-    plan=models.CharField(max_length=100,verbose_name="Plan Name")
-    plan_ar=models.CharField(max_length=100,verbose_name="Arabic Plan name")
+    name=models.CharField(max_length=100,verbose_name="Name")
+    name_ar=models.CharField(max_length=100,verbose_name="Arabic name")
+    image=models.ImageField(upload_to='static/landing_page/image', null=True, blank=True)
     
-    price=models.FloatField()
-    features=RichTextField()
-    features_ar=RichTextField(verbose_name="Arabic Features")
+    features=models.TextField(verbose_name="opinions")
+    features_ar=models.TextField(verbose_name="Arabic opinions")
     
     
     def __str__(self):
-        return str(self.plan)
+        return str(self.name)
+    
+    
+    class Meta:
+        verbose_name_plural = "Users' opinions"
+        verbose_name = "User's opinion"
     
     
 class MainLandingPage(models.Model):
@@ -76,11 +92,21 @@ class MainLandingPage(models.Model):
     courses_sections = models.ManyToManyField(CoursesSection, related_name='landing_pages')
     benefits_sections = models.ManyToManyField(BenfitsSection, related_name='landing_pages')
     benfits_image=models.ImageField(upload_to="static/landing_page/image",null=True,blank=True)
-    pricing_plans = models.ManyToManyField(Pricing, related_name='landing_pages')
+    social_medias = models.ManyToManyField(SocialMedia, related_name='landing_pages')
+    pricing_plans = models.ManyToManyField(Pricing, related_name='landing_pages' , verbose_name='Users opinions')
     
     def __str__(self):
         return f"Landing Page {self.id}"
     
+ 
+ 
+class Video_message(models.Model):
+    message=models.CharField(max_length=100)
+    message_ar=models.CharField(max_length=100,verbose_name="Arabic message")
+
+    def __str__(self):
+        return str(self.message)
+ 
     
     
 class UserRequested(models.Model):
@@ -93,5 +119,13 @@ class UserRequested(models.Model):
     notes=models.TextField()
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE,null=True,blank=True)
     
+    conected=models.BooleanField(default=False,null=True,blank=True)
+    mynotes=models.TextField(null=True,blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    
+    
     def __str__(self):
         return str(self.name)
+    
+    
+    
